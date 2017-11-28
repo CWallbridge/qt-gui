@@ -85,6 +85,25 @@ Window {
                     script: interactiveitems.startItemsPlacement();
                 }
             },
+            
+            State {
+				name: "prod-quiz"
+                PropertyChanges {
+                   target: stash
+                   color: "transparent"
+                }
+                PropertyChanges {
+                    target: drawingarea
+                    drawEnabled: false
+                }
+                PropertyChanges {
+                    target: sandbox
+                    visible: true
+                }
+                StateChangeScript {
+					script: interactiveitems.startProdQuiz();
+                }
+			},
 
             State {
                 name: "freeplay-sandbox"
@@ -113,6 +132,11 @@ Window {
     RosSignal {
         topic: "sandtray/signals/start_items_placement"
         onTriggered: globalstates.state = "items-placement";
+    }
+    
+    RosSignal {
+		topic: "sandtray/signals/start_prod_quiz"
+        onTriggered: globalstates.state = "prod-quiz";
     }
 
     RosSignal {
@@ -810,6 +834,14 @@ Window {
                 itemsToStash();
                 interactiveitems.restoreAllItems();
                 interactiveitems.hideItems([hippo, giraffe, ball, elephant, zebra, caravan, lion, crocodile]);
+            }
+            
+            function startProdQuiz() {
+				console.log("Starting task 'production quiz'");
+                interactiveitems.visible = false;
+                drawingarea.clearDrawing();
+                console.log("Draw Quiz");
+                drawingarea.bgImage = "res/quiz1.svg";
             }
 
             function startItemsPlacement() {
