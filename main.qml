@@ -87,7 +87,7 @@ Window {
             },
             
             State {
-				name: "prod-quiz"
+                name: "prod-quiz"
                 PropertyChanges {
                    target: stash
                    color: "transparent"
@@ -923,10 +923,25 @@ Window {
                 });
 
         }
+
         RosStringSubscriber {
             topic: "sandtray/screenshot"
             onTextChanged: {
                 sandbox.screenshot(text)
+            }
+        }
+
+        function quizChange(img){
+            console.log("Changing quiz image to " + img)
+            if(globalstates.state == "prod-quiz"){
+                drawingarea.bgImage = "res/" + img;
+            }
+        }
+
+        RosStringSubscriber {
+            topic: "sandtray/quiz/question"
+            onTextChanged: {
+                sandbox.quizChange(text)
             }
         }
     }

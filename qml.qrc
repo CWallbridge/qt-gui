@@ -36,5 +36,7 @@
         <file>res/child-face-girl.svg</file>
         <file>ColorPicker.qml</file>
         <file>res/quiz1.svg</file>
+        <file>res/quiz2.svg</file>
+        <file>res/quiz3.svg</file>
     </qresource>
 </RCC>
