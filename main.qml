@@ -842,6 +842,7 @@ Window {
                 drawingarea.clearDrawing();
                 console.log("Draw Quiz");
                 drawingarea.bgImage = "res/quiz1.svg";
+                userScore.visible = true;
             }
 
             function startItemsPlacement() {
@@ -852,6 +853,7 @@ Window {
                 itemsToStash();
                 interactiveitems.restoreAllItems();
                 interactiveitems.hideItems([girl, caravan]);
+                userScore.visible = false;
             }
 
             function startFreeplay() {
@@ -942,6 +944,55 @@ Window {
             topic: "sandtray/quiz/question"
             onTextChanged: {
                 sandbox.quizChange(text)
+            }
+        }
+
+        Item {
+            id: userScore
+            x: 100
+            y: 100
+            visible:false
+
+            TextEdit{
+                id: uscore
+                font.pointSize: 128
+                text: "0"
+            }
+        }
+
+        Item {
+            id: agentScore
+            x: window.width - 200
+            y: 100
+
+            TextEdit{
+                id: ascore
+                font.pointSize: 128
+                text: "0"
+            }
+        }
+
+        function userScoreChange(newScore){
+            console.log("Changing userScore to " + newScore)
+            uscore.text = newScore;
+        }
+
+        RosStringSubscriber {
+            topic: "sandtray/quiz/userScore"
+            onTextChanged: {
+                sandbox.userScoreChange(text)
+            }
+        }
+
+        function agentScoreChange(newScore){
+            console.log("Changing agentScore to " + newScore)
+            ascore.text = newScore;
+        }
+
+        RosStringSubscriber {
+            topic: "sandtray/quiz/agentScore"
+            onTextChanged: {
+                sandbox.agentScoreChange(text)
             }
         }
     }
