@@ -843,6 +843,10 @@ Window {
                 console.log("Draw Quiz");
                 drawingarea.bgImage = "res/quiz1.svg";
                 userScore.visible = true;
+                agentScore.visible = true;
+                userScoreChange("0")
+                agentScoreChange("0")
+                
             }
 
             function startItemsPlacement() {
@@ -854,6 +858,7 @@ Window {
                 interactiveitems.restoreAllItems();
                 interactiveitems.hideItems([girl, caravan]);
                 userScore.visible = false;
+                agentScore.visible = false;
             }
 
             function startFreeplay() {
@@ -964,6 +969,7 @@ Window {
             id: agentScore
             x: window.width - 200
             y: 100
+            visible:false
 
             TextEdit{
                 id: ascore
