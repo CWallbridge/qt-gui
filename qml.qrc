@@ -38,5 +38,12 @@
         <file>res/quiz1.svg</file>
         <file>res/quiz2.svg</file>
         <file>res/quiz3.svg</file>
+        <file>res/quiz4.svg</file>
+        <file>res/quiz5.svg</file>
+        <file>res/quiz6.svg</file>
+        <file>res/quiz7.svg</file>
+        <file>res/quiz8.svg</file>
+        <file>res/quiz9.svg</file>
+        <file>res/quiz10.svg</file>
     </qresource>
 </RCC>
