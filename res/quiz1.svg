@@ -145,14 +145,16 @@
        x="0"
        style="fill:#ffffff" /></g><g
      id="layer1"
-     transform="matrix(1.5,0,0,1.5,-228.11074,-148.6699)"><image
+     transform="matrix(1.5,0,0,1.5,-228.11074,-148.6699)">
+     <!-- <image
        sodipodi:absref="/home/daniel/Projects/L2TOR_project/freeplay-sandbox/qt-gui/res/1831B205.png"
        xlink:href="1831B205.png"
        style="overflow:visible;opacity:0.75;enable-background:new"
        width="308"
        height="503"
        transform="matrix(0.9968,0,0,0.998,697,224)"
-       id="image28" /><g
+       id="image28" /> -->
+       <g
        id="g4249"><polygon
          class="st1"
          points="946.9,577.2 937.5,517.4 930.8,482.1 923.2,482.1 920.1,487.9 929.9,573.2 937.3,617.6 944.7,653.5 954.7,653.1 954.5,642.4 "
