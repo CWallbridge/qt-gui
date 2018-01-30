@@ -45,5 +45,7 @@
         <file>res/quiz8.svg</file>
         <file>res/quiz9.svg</file>
         <file>res/quiz10.svg</file>
+        <file>res/correct_answer.svg</file>
+        <file>res/incorrect_answer.svg</file>
     </qresource>
 </RCC>

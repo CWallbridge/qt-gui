@@ -85,7 +85,7 @@ Window {
                     script: interactiveitems.startItemsPlacement();
                 }
             },
-            
+
             State {
                 name: "prod-quiz"
                 PropertyChanges {
@@ -133,7 +133,7 @@ Window {
         topic: "sandtray/signals/start_items_placement"
         onTriggered: globalstates.state = "items-placement";
     }
-    
+
     RosSignal {
 		topic: "sandtray/signals/start_prod_quiz"
         onTriggered: globalstates.state = "prod-quiz";
@@ -835,7 +835,7 @@ Window {
                 interactiveitems.restoreAllItems();
                 interactiveitems.hideItems([hippo, giraffe, ball, elephant, zebra, caravan, lion, crocodile]);
             }
-            
+
             function startProdQuiz() {
 				console.log("Starting task 'production quiz'");
                 interactiveitems.visible = false;
@@ -846,7 +846,7 @@ Window {
                 agentScore.visible = true;
                 userScoreChange("0")
                 agentScoreChange("0")
-                
+
             }
 
             function startItemsPlacement() {
@@ -949,6 +949,87 @@ Window {
             topic: "sandtray/quiz/question"
             onTextChanged: {
                 sandbox.quizChange(text)
+            }
+        }
+
+        Rectangle {
+            id: quiz_correct
+            color:"white"
+            opacity:0.7
+            visible: false
+            anchors.fill:parent
+
+            Image {
+                // set the actual size of the SVG page
+                width: 0.60 / sandbox.pixel2meter
+                height: 0.33 / sandbox.pixel2meter
+                // make sure the image is in the corner ie, the sandtray origin
+                x: 0
+                y: 0
+                fillMode: Image.PreserveAspectCrop
+                source: "res/correct_answer.svg"
+            }
+
+            Timer {
+                id: hide_quiz_correct
+                interval: 5000; running: false; repeat: false
+                onTriggered: {
+                    quiz_correct.visible = false;
+                }
+
+            }
+
+        }
+
+        Rectangle {
+            id: quiz_incorrect
+            color:"white"
+            opacity:0.7
+            visible: false
+            anchors.fill:parent
+
+            Image {
+                // set the actual size of the SVG page
+                width: 0.60 / sandbox.pixel2meter
+                height: 0.33 / sandbox.pixel2meter
+                // make sure the image is in the corner ie, the sandtray origin
+                x: 0
+                y: 0
+                fillMode: Image.PreserveAspectCrop
+                source: "res/incorrect_answer.svg"
+
+            }
+
+            Timer {
+                id: hide_quiz_incorrect
+                interval: 5000; running: false; repeat: false
+                onTriggered: {
+                    quiz_incorrect.visible = false;
+                }
+
+            }
+
+        }
+
+
+        RosStringSubscriber {
+            topic: "sandtray/quiz/result"
+            onTextChanged: {
+                sandbox.quizShowResult(text)
+            }
+        }
+
+        function quizShowResult(text){
+            console.log("Changing quiz result to " + text)
+            if(globalstates.state == "prod-quiz"){
+                if (text==="correct"){
+                  quiz_correct.visible=true;
+                  hide_quiz_correct.start();
+                }
+                if (text==="incorrect"){
+                  quiz_incorrect.visible=true;
+                  hide_quiz_incorrect.start();
+                }
             }
         }
 
