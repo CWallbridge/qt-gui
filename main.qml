@@ -1002,7 +1002,7 @@ Window {
 
             Timer {
                 id: hide_quiz_incorrect
-                interval: 5000; running: false; repeat: false
+                interval: 3000; running: false; repeat: false
                 onTriggered: {
                     quiz_incorrect.visible = false;
                 }
