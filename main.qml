@@ -1040,7 +1040,7 @@ Window {
             TextEdit{
                 id: uscore
                 x: 100
-                y: 300
+                y: 150
                 font.pointSize: 128
                 text: "0"
             }
@@ -1048,7 +1048,7 @@ Window {
                 id: uname
                 x: 100
                 y: 100
-                font.pointSize: 128
+                font.pointSize: 32
                 text: "Name"
             }
         }
@@ -1061,15 +1061,15 @@ Window {
             TextEdit{
                 id: ascore
                 x: window.width - 200
-                y: 300
+                y: 150
                 font.pointSize: 128
                 text: "0"
             }
             TextEdit{
                 id: aname
-                x: window.width - 200
+                x: window.width - 300
                 y: 100
-                font.pointSize: 128
+                font.pointSize: 32
                 text: "Name"
             }
         }
