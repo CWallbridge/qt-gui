@@ -1034,28 +1034,43 @@ Window {
         }
 
         Item {
-            id: userScore
-            x: 100
-            y: 100
+            id: userScore            
             visible:false
 
             TextEdit{
                 id: uscore
+                x: 100
+                y: 300
                 font.pointSize: 128
                 text: "0"
+            }
+            TextEdit{
+                id: uname
+                x: 100
+                y: 100
+                font.pointSize: 128
+                text: "Name"
             }
         }
 
         Item {
-            id: agentScore
-            x: window.width - 200
-            y: 100
+            id: agentScore            
             visible:false
+
 
             TextEdit{
                 id: ascore
+                x: window.width - 200
+                y: 300
                 font.pointSize: 128
                 text: "0"
+            }
+            TextEdit{
+                id: aname
+                x: window.width - 200
+                y: 100
+                font.pointSize: 128
+                text: "Name"
             }
         }
 
@@ -1080,6 +1095,30 @@ Window {
             topic: "sandtray/quiz/agentScore"
             onTextChanged: {
                 sandbox.agentScoreChange(text)
+            }
+        }
+
+        function userNameChange(text){
+            console.log("Changing user Name to " + text)
+            uname.text = text;
+        }
+
+        RosStringSubscriber {
+            topic: "nao/prod_quiz/childname"
+            onTextChanged: {
+                sandbox.userNameChange(text)
+            }
+        }
+
+        function agentNameChange(text){
+            console.log("Changing agent Name to " + text)
+            aname.text = text;
+        }
+
+        RosStringSubscriber {
+            topic: "sandtray/quiz/agentname"
+            onTextChanged: {
+                sandbox.agentNameChange(text)
             }
         }
     }
