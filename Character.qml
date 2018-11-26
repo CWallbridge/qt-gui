@@ -53,7 +53,7 @@ InteractiveItem {
     }
     Timer{
         id: updateDestination
-        interval: 100
+        interval: 2000
         onTriggered: {
             console.log(number)
             var under=caseLists.childAt(x+width/2,y+height/2)
@@ -65,6 +65,7 @@ InteractiveItem {
                 under.image = "res/"+name+".png"
                 under.broadcasting=false
                 publish("success")
+                command("success")
                 x= map.width/2-width/2
                 y= map.height/2-height/2
                 if(number == -maps.targets[maps.mapNumber].length){
