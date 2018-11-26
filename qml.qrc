@@ -5,47 +5,27 @@
         <file>main.cpp</file>
         <file>InteractiveItem.qml</file>
         <file>RectangleBoxBody.qml</file>
-        <file>res/sprite-crocodile.png</file>
-        <file>res/sprite-elephant.png</file>
-        <file>res/sprite-giraffe.png</file>
-        <file>res/sprite-hippo.png</file>
-        <file>res/sprite-leopard.png</file>
-        <file>res/sprite-lion.png</file>
-        <file>res/sprite-rhino.png</file>
-        <file>res/sprite-zebra.png</file>
         <file>Character.qml</file>
         <file>res/nao_hand.svg</file>
         <file>res/nao_head.svg</file>
-        <file>res/child_head.svg</file>
         <file>TouchJoint.qml</file>
-        <file>VisualAttentionCalibration.qml</file>
-        <file>res/rocket.svg</file>
-        <file>res/alternate_rocket.svg</file>
         <file>res/tags/markers.svg</file>
-        <file>DrawingArea.qml</file>
-        <file>ColorSample.qml</file>
-        <file>res/ok.svg</file>
-        <file>res/paint-brush.svg</file>
-        <file>res/eraser.svg</file>
-        <file>res/eraser_selected.svg</file>
-        <file>res/tutorial_bg.svg</file>
-        <file>res/ball.svg</file>
-        <file>res/caravan.svg</file>
-        <file>res/caravan.png</file>
-        <file>res/child-face-boy.svg</file>
-        <file>res/child-face-girl.svg</file>
-        <file>ColorPicker.qml</file>
-        <file>res/quiz1.svg</file>
-        <file>res/quiz2.svg</file>
-        <file>res/quiz3.svg</file>
-        <file>res/quiz4.svg</file>
-        <file>res/quiz5.svg</file>
-        <file>res/quiz6.svg</file>
-        <file>res/quiz7.svg</file>
-        <file>res/quiz8.svg</file>
-        <file>res/quiz9.svg</file>
-        <file>res/quiz10.svg</file>
-        <file>res/correct_answer.svg</file>
-        <file>res/incorrect_answer.svg</file>
+        <file>res/commercial.png</file>
+        <file>res/fire.png</file>
+        <file>res/full.png</file>
+        <file>res/hospital.png</file>
+        <file>res/police.png</file>
+        <file>StaticImage.qml</file>
+        <file>res/target.png</file>
+        <file>res/church.png</file>
+        <file>res/manor.png</file>
+        <file>res/empty.png</file>
+        <file>res/BG1.png</file>
+        <file>res/Map1BG.png</file>
+        <file>PrettyLabel.qml</file>
+        <file>PrettyButton.qml</file>
+        <file>res/residential.png</file>
+        <file>res/factory.png</file>
+        <file>res/power.png</file>
     </qresource>
 </RCC>
