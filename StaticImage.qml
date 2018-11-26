@@ -70,7 +70,8 @@ Item {
             origin: mapOrigin
             parentframe: mapOrigin.name
 
-            pixelscale: 9/sandbox.width
+            //pixelscale: 9/sandbox.width
+            pixelscale: sandbox.pixel2meter
         }
     }
     onImageChanged: console.log(image)
