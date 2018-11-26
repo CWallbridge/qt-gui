@@ -1,8 +1,8 @@
-import QtQuick 2.7
+import QtQuick 2.2
 import QtQuick.Window 2.2
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 1.4
- import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.1
 import QtTest 1.1
 
@@ -33,13 +33,13 @@ Window {
             // default state ("") is a blank, black, screen
             State {
                 name: "start"
-                PropertyChanges {
+                /*PropertyChanges {
                    target: startPanel
                    visible: true
-               }
+               }*/
                 StateChangeScript {
                      script: {
-                         condition.visible=false
+                         condition.visible=true
                      }
                  }
             },
@@ -49,6 +49,11 @@ Window {
                    target: tutoPanel
                    visible: true
                }
+                StateChangeScript {
+                     script: {
+                         condition.visible=false
+                     }
+                 }
             },
             State {
                 name: "placement1"
@@ -60,6 +65,7 @@ Window {
                       script: {
                           maps.updateMap()
                           publish("start_placement1")
+                          command("placement1")
                       }
                   }
             },
@@ -80,6 +86,7 @@ Window {
                       script: {
                           maps.updateMap()
                           publish("start_placement2")
+                          command("placement2")
                       }
                   }
             },
@@ -98,6 +105,21 @@ Window {
         ]
     }
 
+    RosSignal {
+        topic: "sandtray/signals/start_placement1"
+        onTriggered: globalstates.state = "placement1";
+    }
+
+    RosSignal {
+        topic: "sandtray/signals/rob_speech_start"
+        onTriggered: publish("Robot_desc_started")
+    }
+
+    RosSignal {
+        topic: "sandtray/signals/rob_speech_end"
+        onTriggered: publish("Robot_desc_ended")
+    }
+
     Item {
         id: condition
         anchors.fill: parent
@@ -106,9 +128,9 @@ Window {
             anchors.fill:parent
             columns: 2
             spacing: width/10
-            topPadding: spacing
-            leftPadding: spacing
-            rightPadding: spacing
+            //topPadding: spacing
+            //leftPadding: spacing
+            //rightPadding: spacing
             horizontalItemAlignment: Grid.AlignHCenter
             verticalItemAlignment: Grid.AlignVCenter
             property int cellWidth: (width-(columns+1)*spacing)/columns
@@ -140,12 +162,21 @@ Window {
         }
         function start(order, condition){
             maps.order=order
+            maps.mapNumber=order
             globalstates.state="start"
             publish("Condition:"+condition+" Starting map: "+(order+1))
+            var d = new Date()
+            startingTime = d.getTime()
+            qlogfilename = "placement-data/"+d.toISOString().split(".")[0].replace(":","-").replace(":","-")
+            globalstates.state="tuto"
+            publish("startStudy_"+qlogfilename)
+            publish("order_"+order)
+            publish("condition_"+condition)
+            setRobotCondition(order, condition)
         }
     }
 
-    Item {
+    /*Item {
         id: startPanel
         anchors.fill: parent
         visible: false
@@ -164,7 +195,7 @@ Window {
                 publish("startStudy_"+qlogfilename)
             }
         }
-    }
+    }*/
 
     Item {
         id: midPanel
@@ -178,7 +209,7 @@ Window {
             anchors.horizontalCenter: parent.horizontalCenter
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            text:"You finished the first map, now the roles are inverted."
+            text:"You finished the first map, press start when you are ready for the second map."
         }
         PrettyButton{
             width: parent.width/5
@@ -217,9 +248,9 @@ Window {
             anchors.fill:parent
             columns: 6
             spacing: width/20
-            topPadding: spacing
-            leftPadding: spacing
-            rightPadding: spacing
+            //topPadding: spacing
+            //leftPadding: spacing
+            //rightPadding: spacing
             horizontalItemAlignment: Grid.AlignHCenter
             verticalItemAlignment: Grid.AlignVCenter
             property int cellWidth: (width-(columns+1)*spacing)/columns
@@ -328,11 +359,14 @@ Window {
         PrettyButton{
             width: parent.width/5
             height: parent.height/15
-            text: "Continue"
+            text: "Start"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
             anchors.bottomMargin: height/2
-            onClicked: {globalstates.state="placement1"}
+            onClicked: {
+                    //globalstates.state="placement1"
+                    command("tutorial")
+                }
         }
     }
 
@@ -355,6 +389,8 @@ Window {
             anchors.top: parent.top
             visible: true
             source: "res/BG1.png"
+
+            //pixelscale: sandbox.pixel2meter
 
             Item {
                 // this item sticks to the 'visual' origin of the map, taking into account
@@ -556,18 +592,18 @@ Window {
             property var order: 0
             //-X targets, 0 empty, 1 residential, 2 manor, 3 factory, 4 police, 5 fire, 6 church, 7 hospital, 8 power, 9 commercial
             property var names: ["", "residential", "manor", "factory", "police", "fire", "church", "hospital", "power", "commercial"]
-            property var mapDesc: [ [ 1, 6, 8, 1,-6, 7, 1,-2, 1,
+            property var mapDesc: [ [ 1, -7, 8, 1,-6, 7, 1,-2, 1,
                                      1, 5, 0, 1, 9, 1, 4, 5, 1,
-                                     1,-4, 7,-1, 0, 3, 1, 0, 6,
-                                     1, 9, 0, 4,-5, 1, 5,-3, 1,
+                                     1,-5, 7,-1, 0, 3, -3, 0, 6,
+                                     1, 9, 1, 4, 0, 1, 5,-4, 1,
                                      1, 1, 2, 1, 9, 1, 0, 7, 1],
                                    [ 1, 9, 0, 5,-1, 1, 6, 1, 1,
-                                     1, 6, 4, 1, 9,-5, 0,-2, 1,
+                                     1, 6, 4, 1, 9,-5, 1,-2, 0,
                                     -6,-7, 1, 2, 0, 4, 1, 1, 1,
                                      4, 1, 1, 1, 1, 9,-4, 5, 1,
                                     -3, 3, 9, 0, 5, 0, 4, 1, 1]]
-            //property var targets: [[1,2,9,4,1,4],[7,7,1,7,1,2,8]]
-            property var targets: [[1,2],[7,7]]
+            property var targets: [[1,2,1,9,4,4,6],[7,7,1,7,1,2,8]]
+            //property var targets: [[1,2],[7,7]]
 
             property var mapNumber: order
             property var currentId: 0
@@ -638,6 +674,16 @@ Window {
         topic: "sandtray/interaction_events"
     }
 
+    RosStringPublisher {
+        id: naoCommand
+        topic: "nao/place_desc/command"
+    }
+
+    RosStringPublisher {
+        id: naoCondition
+        topic: "nao/place_desc/condition"
+    }
+
     function publish(event){
         var d = new Date()
         console.log(window.startingTime)
@@ -645,6 +691,14 @@ Window {
         var log=[n,event]
         fileio.write(window.qlogfilename, log.join(","))
         interactionEvents.text=event
+    }
+
+    function command(cmd){
+        naoCommand.text=cmd
+    }
+
+    function setRobotCondition(order, condition){
+        naoCondition.text=order+"-"+condition
     }
 
     MouseArea {
@@ -681,10 +735,10 @@ Window {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        Rectangle {
-            anchors.fill: parent
-            color: "red"
-        }
+        //Rectangle {
+        //    anchors.fill: parent
+        //    color: "red"
+        //}
 
         property int clicks: 0
 
