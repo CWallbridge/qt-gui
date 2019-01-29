@@ -115,6 +115,14 @@ Window {
         onTriggered: publish("Robot_desc_started")
     }
 
+    RosStringSubscriber {
+        id: interactionEventsSub
+        topic: "sandtray/signals/rob_speech_desc"
+        onTextChanged: {
+            publish(text);
+        }
+    }
+
     RosSignal {
         topic: "sandtray/signals/rob_speech_end"
         onTriggered: publish("Robot_desc_ended")
@@ -209,7 +217,7 @@ Window {
             anchors.horizontalCenter: parent.horizontalCenter
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            text:"You finished the first map, press start when you are ready for the second map."
+            text:"You finished the first map. Please fill in the mid-study questionnaire. When you have finished the questionnaire you may press start to proceed."
         }
         PrettyButton{
             width: parent.width/5
@@ -236,7 +244,7 @@ Window {
             anchors.horizontalCenter: parent.horizontalCenter
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            text:"You finished the study, thank you for participating."
+            text:"You finished the task, thank you for participating. Please fill in the final questionnaire."
         }
     }
 
